@@ -1,0 +1,64 @@
+@HotelApi_HostAddress = http://localhost:5129
+
+### Listar habitaciones
+GET {{HotelApi_HostAddress}}/api/Habitacion
+Accept: application/json
+
+### Consultar todas las reservas
+GET {{HotelApi_HostAddress}}/api/Reserva
+Accept: application/json
+
+### Registrar reserva (habitacion DISPONIBLE) -> 201
+POST {{HotelApi_HostAddress}}/api/Reserva
+Content-Type: application/json
+
+{
+  "nombreCliente": "Juan Perez",
+  "numeroHabitacion": 101,
+  "fechaEntrada": "2026-10-01",
+  "fechaSalida": "2026-10-04",
+  "cantidadPersonas": 2,
+  "usuario": "recepcion1"
+}
+
+### Registrar en habitacion OCUPADA -> 409
+POST {{HotelApi_HostAddress}}/api/Reserva
+Content-Type: application/json
+
+{
+  "nombreCliente": "Maria Lopez",
+  "numeroHabitacion": 101,
+  "fechaEntrada": "2026-10-05",
+  "fechaSalida": "2026-10-06",
+  "cantidadPersonas": 1,
+  "usuario": "recepcion1"
+}
+
+### Fechas/personas invalidas -> 400
+POST {{HotelApi_HostAddress}}/api/Reserva
+Content-Type: application/json
+
+{
+  "nombreCliente": "Carlos Ruiz",
+  "numeroHabitacion": 102,
+  "fechaEntrada": "2026-10-05",
+  "fechaSalida": "2026-10-05",
+  "cantidadPersonas": 0,
+  "usuario": "recepcion1"
+}
+
+### Modificar reserva (cambio de habitacion y fechas, recalcula monto)
+PUT {{HotelApi_HostAddress}}/api/Reserva/1
+Content-Type: application/json
+
+{
+  "nombreCliente": "Juan Perez",
+  "numeroHabitacion": 201,
+  "fechaEntrada": "2026-10-01",
+  "fechaSalida": "2026-10-06",
+  "cantidadPersonas": 3,
+  "usuario": "recepcion2"
+}
+
+### Eliminar reserva (libera la habitacion)
+DELETE {{HotelApi_HostAddress}}/api/Reserva/1?usuario=recepcion2

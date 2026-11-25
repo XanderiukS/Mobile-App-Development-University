@@ -1,0 +1,38 @@
+@Ordenes_API_HostAddress = http://localhost:5180
+
+### GET - todas las órdenes
+GET {{Ordenes_API_HostAddress}}/api/Orden
+Accept: application/json
+
+### GET - una orden por Id
+GET {{Ordenes_API_HostAddress}}/api/Orden/1
+Accept: application/json
+
+### POST - registrar una orden (PostgreSQL + bitácora MongoDB)
+POST {{Ordenes_API_HostAddress}}/api/Orden
+Content-Type: application/json
+
+{
+  "numeroOrden": "ORD-0003",
+  "nombreCliente": "Carlos Ramírez",
+  "direccionEntrega": "Boulevard Los Próceres 12-34, Zona 10",
+  "monto": 450.75,
+  "estado": "REGISTRADA",
+  "usuarioOperacion": "admin"
+}
+
+### PUT - modificar una orden (PostgreSQL + bitácora MongoDB del cambio)
+PUT {{Ordenes_API_HostAddress}}/api/Orden/1
+Content-Type: application/json
+
+{
+  "numeroOrden": "ORD-0001",
+  "nombreCliente": "Juan Pérez",
+  "direccionEntrega": "5a Avenida 10-20, Zona 1, Guatemala",
+  "monto": 250.00,
+  "estado": "ENTREGADA",
+  "usuarioOperacion": "supervisor"
+}
+
+### DELETE - eliminar una orden
+DELETE {{Ordenes_API_HostAddress}}/api/Orden/2
